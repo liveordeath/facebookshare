@@ -5,7 +5,7 @@ import './globals.css'
 export async function generateMetadata(): Promise<Metadata> {
       let pageSettings = {
         title: '.',
-        image: 'https://picsum.photos/1200/630?random=1'
+        image: 'https://raw.githubusercontent.com/liveordeath/facebookshare/refs/heads/main/public/images/IMG_7488.jpg' // ← Thay bằng URL Imgur của bạn
       }
 
   try {
