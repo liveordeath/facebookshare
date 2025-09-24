@@ -19,12 +19,16 @@ export default async function Home() {
     })
     if (response.ok) {
       const data = await response.json()
+      console.log('Page: Fetched pageSettings from admin:', data.pageSettings)
       if (data.pageSettings) {
         pageSettings = data.pageSettings
+        console.log('Page: Updated pageSettings to:', pageSettings)
       }
+    } else {
+      console.log('Page: API response not ok:', response.status)
     }
   } catch (error) {
-    console.error('Error loading page settings:', error)
+    console.error('Page: Error loading page settings:', error)
   }
   return (
     <>

@@ -19,12 +19,16 @@ export async function generateMetadata(): Promise<Metadata> {
     })
     if (response.ok) {
       const data = await response.json()
+      console.log('Layout: Fetched pageSettings from admin:', data.pageSettings)
       if (data.pageSettings) {
         pageSettings = data.pageSettings
+        console.log('Layout: Updated pageSettings to:', pageSettings)
       }
+    } else {
+      console.log('Layout: API response not ok:', response.status)
     }
   } catch (error) {
-    console.error('Error loading page settings:', error)
+    console.error('Layout: Error loading page settings:', error)
   }
 
   return {
