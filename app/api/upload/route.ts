@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,31 +19,26 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File size must be less than 5MB' }, { status: 400 })
     }
 
-    // Generate unique filename
-    const timestamp = Date.now()
-    const extension = path.extname(file.name)
-    const filename = `uploaded-${timestamp}${extension}`
-    const filepath = path.join(process.cwd(), 'public', 'images', filename)
-
-    // Ensure directory exists
-    const dir = path.dirname(filepath)
-    await fs.mkdir(dir, { recursive: true })
-
-    // Save file
+    // Convert file to base64 for storage
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
-    await fs.writeFile(filepath, buffer)
+    const base64 = buffer.toString('base64')
+    const dataUrl = `data:${file.type};base64,${base64}`
 
-    // Return file URL
-    const fileUrl = `/images/${filename}`
+    // Generate unique filename
+    const timestamp = Date.now()
+    const extension = file.name.split('.').pop() || 'jpg'
+    const filename = `uploaded-${timestamp}.${extension}`
     
     return NextResponse.json({ 
       success: true, 
-      url: fileUrl,
-      filename: filename 
+      url: dataUrl,
+      filename: filename,
+      type: file.type,
+      size: file.size
     })
   } catch (error) {
     console.error('Upload error:', error)
-    return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
+    return NextResponse.json({ error: 'Upload failed', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 })
   }
 }
