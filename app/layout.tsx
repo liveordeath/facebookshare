@@ -4,7 +4,7 @@ import './globals.css'
 // Dynamic metadata function
 export async function generateMetadata(): Promise<Metadata> {
       let pageSettings = {
-        title: '',
+        title: '.',
         image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=1000&fit=crop&crop=center'
       }
 
