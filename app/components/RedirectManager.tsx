@@ -35,17 +35,17 @@ export default function RedirectManager() {
         localStorage.setItem('randomUrl', randomUrl)
         
         // Thêm targetUrl vào config
-        configToUse.targetUrl = randomUrl
-        setConfig(configToUse)
+        const configWithTarget = { ...configToUse, targetUrl: randomUrl }
+        setConfig(configWithTarget)
         
-        if (configToUse.showNotification) {
+        if (configWithTarget.showNotification) {
           // Hiển thị màn hình redirect với thông báo
           setShouldShowRedirect(true)
         } else {
           // Redirect ngay lập tức mà không hiển thị gì
           setTimeout(() => {
             window.location.href = randomUrl
-          }, configToUse.delay)
+          }, configWithTarget.delay)
         }
       } catch (error) {
         console.error('Error loading config:', error)

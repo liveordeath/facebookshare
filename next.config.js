@@ -6,9 +6,7 @@ const nextConfig = {
     unoptimized: true
   },
   // Bỏ assetPrefix và basePath cho Vercel
-  experimental: {
-    serverComponentsExternalPackages: ['fs']
-  }
+  serverExternalPackages: ['fs']
 }
 
 module.exports = nextConfig
