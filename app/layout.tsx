@@ -40,7 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: pageSettings.title,
       description: '',
-      url: '/',
+      url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://facebookshare-roan.vercel.app',
       siteName: 'Candid Skincare',
       images: [
         {
@@ -58,6 +58,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title: pageSettings.title,
       description: '',
       images: [pageSettings.image],
+      site: '@candid_skincare',
+      creator: '@candid_skincare',
     },
     robots: {
       index: true,
@@ -69,6 +71,18 @@ export async function generateMetadata(): Promise<Metadata> {
         'max-image-preview': 'large',
         'max-snippet': -1,
       },
+    },
+    other: {
+      'og:site_name': 'Candid Skincare',
+      'og:type': 'website',
+      'og:locale': 'vi_VN',
+      'twitter:site': '@candid_skincare',
+      'twitter:creator': '@candid_skincare',
+      'twitter:domain': 'candid-skincare.com',
+      'application-name': 'Candid Skincare',
+      'apple-mobile-web-app-title': 'Candid Skincare',
+      'msapplication-TileColor': '#667eea',
+      'theme-color': '#667eea',
     },
   }
 }
