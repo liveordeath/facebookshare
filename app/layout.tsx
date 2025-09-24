@@ -5,7 +5,7 @@ import './globals.css'
 export async function generateMetadata(): Promise<Metadata> {
       let pageSettings = {
         title: '',
-        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=100&fit=crop&crop=center'
+        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=1000&fit=crop&crop=center'
       }
 
   try {
