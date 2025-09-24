@@ -40,6 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: pageSettings.title,
       description: '',
+      url: 'test',
       siteName: 'Candid Skincare',
       images: [
         {
