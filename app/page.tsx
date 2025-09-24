@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="container">
       <div className="header">
-        <h1>4 Tips Cho Cuộc Sống Cân Bằng</h1>
+        <h1>4 Tips Cho Cuộc Sống Cân Bằng Bằng</h1>
         <p className="subtitle">Khám phá bí quyết đơn giản để có cuộc sống hạnh phúc và cân bằng hơn</p>
       </div>
       
