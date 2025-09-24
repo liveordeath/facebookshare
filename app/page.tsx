@@ -72,25 +72,6 @@ export default function Home() {
           <p><strong>Nhớ rằng:</strong> Bạn xứng đáng được chăm sóc và yêu thương. Hãy dành thời gian cho bản thân mỗi ngày, dù chỉ là 10 phút.</p>
         </div>
 
-        <div className="meta-info">
-          <h3>🔗 Meta Tags Open Graph đã được cấu hình:</h3>
-          <div className="meta-tag">&lt;meta property="og:title" content="4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare"&gt;</div>
-          <div className="meta-tag">&lt;meta property="og:description" content="Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện."&gt;</div>
-          <div className="meta-tag">&lt;meta property="og:image" content="/images/image.png"&gt;</div>
-          <div className="meta-tag">&lt;meta property="og:url" content="https://example.com/"&gt;</div>
-        </div>
-        
-        <div className="meta-info">
-          <h3>📱 Cách hoạt động của Open Graph:</h3>
-          <p>Khi bạn chia sẻ link này trên Facebook, Twitter, LinkedIn hoặc các mạng xã hội khác, các meta tags trên sẽ tự động hiển thị:</p>
-          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
-            <li><strong>og:title</strong> - Tiêu đề hiển thị khi chia sẻ</li>
-            <li><strong>og:description</strong> - Mô tả ngắn gọn về nội dung</li>
-            <li><strong>og:image</strong> - Hình ảnh đại diện cho bài viết</li>
-            <li><strong>og:url</strong> - Link chính thức của trang web</li>
-          </ul>
-          <p>Điều này giúp bài viết của bạn trông chuyên nghiệp và hấp dẫn hơn khi được chia sẻ trên mạng xã hội.</p>
-        </div>
       </div>
       
       <div className="footer">
