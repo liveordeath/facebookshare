@@ -120,9 +120,23 @@ export default function AdminPage() {
       borderRadius: '15px',
       boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
     }}>
-      <h1 style={{ color: '#2c3e50', marginBottom: '30px' }}>
-        🔧 Quản lý Random Redirect URLs
-      </h1>
+          <h1 style={{ color: '#2c3e50', marginBottom: '30px' }}>
+            🔧 Quản lý Random Redirect URLs
+          </h1>
+
+          <div style={{ 
+            marginBottom: '20px', 
+            padding: '15px', 
+            background: '#e3f2fd', 
+            borderRadius: '8px',
+            border: '1px solid #2196f3',
+            fontSize: '14px'
+          }}>
+            <strong>💡 Lưu ý:</strong> Sau khi chỉnh sửa và lưu, hãy:
+            <br />• Nhấn <strong>"👁️ Xem trang public"</strong> để mở trang mới
+            <br />• Hoặc <strong>Ctrl+F5</strong> để refresh trang public
+            <br />• Hoặc mở tab ẩn danh để xem thay đổi
+          </div>
 
       {/* Page Settings */}
       <div style={{ 
@@ -376,38 +390,53 @@ export default function AdminPage() {
       </div>
 
 
-      <div style={{ display: 'flex', gap: '15px' }}>
-        <button
-          onClick={handleSave}
-          style={{
-            padding: '12px 24px',
-            background: '#28a745',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 'bold'
-          }}
-        >
-          {isSaved ? '✅ Đã lưu!' : '💾 Lưu cấu hình'}
-        </button>
-        
-        <button
-          onClick={handleReset}
-          style={{
-            padding: '12px 24px',
-            background: '#6c757d',
-            color: 'white',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-        >
-          🔄 Reset
-        </button>
-      </div>
+          <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+            <button
+              onClick={handleSave}
+              style={{
+                padding: '12px 24px',
+                background: '#28a745',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '16px',
+                fontWeight: 'bold'
+              }}
+            >
+              {isSaved ? '✅ Đã lưu!' : '💾 Lưu cấu hình'}
+            </button>
+            
+            <button
+              onClick={handleReset}
+              style={{
+                padding: '12px 24px',
+                background: '#6c757d',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '16px'
+              }}
+            >
+              🔄 Reset
+            </button>
+
+            <button
+              onClick={() => window.open('/', '_blank')}
+              style={{
+                padding: '12px 24px',
+                background: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '16px'
+              }}
+            >
+              👁️ Xem trang public
+            </button>
+          </div>
 
       <div style={{ 
         marginTop: '30px', 
