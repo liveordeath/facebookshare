@@ -40,7 +40,6 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: pageSettings.title,
       description: '',
-      url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://facebookshare-roan.vercel.app',
       siteName: 'Candid Skincare',
       images: [
         {
