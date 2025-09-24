@@ -1,15 +1,15 @@
-# Open Graph Meta Tags Demo với Next.js
+# 🚀 Random Redirect Tool
 
-Trang web demo sử dụng Next.js với các meta tags Open Graph được cấu hình sẵn.
+Tool quản lý random redirect với admin panel và API routes.
 
-## 🚀 Tính năng
+## ✨ Tính năng
 
-- ✅ Meta tags Open Graph đầy đủ
-- ✅ Twitter Card support
-- ✅ SEO optimization
-- ✅ Responsive design
-- ✅ Next.js App Router
-- ✅ TypeScript support
+- 🎲 **Random Redirect**: Chọn ngẫu nhiên URL từ danh sách
+- 🔧 **Admin Panel**: Quản lý config và URL list  
+- 🌐 **API Routes**: Cross-device sync
+- ⚡ **Real-time**: Cập nhật config ngay lập tức
+- 📱 **Responsive**: Hoạt động trên mọi thiết bị
+- 🔒 **TypeScript**: Type safety đầy đủ
 
 ## 📦 Cài đặt
 
@@ -44,21 +44,37 @@ export const metadata: Metadata = {
 }
 ```
 
-## 🌐 Deploy
+## 🌐 Deploy lên Vercel
 
-### Vercel (Khuyến nghị)
+### Bước 1: Chuẩn bị
+```bash
+npm install
+npm run build
+```
+
+### Bước 2: Deploy
 1. Push code lên GitHub
-2. Kết nối repository với Vercel
-3. Tự động deploy
+2. Vào [vercel.com](https://vercel.com)
+3. Import repository
+4. Deploy tự động
 
-### Netlify
-1. Build project: `npm run build`
-2. Upload thư mục `out/` lên Netlify
+### URLs sau deploy:
+- **Public**: `https://your-project.vercel.app/`
+- **Admin**: `https://your-project.vercel.app/admin`
+- **API**: `https://your-project.vercel.app/api/config`
 
-### GitHub Pages
-1. Cấu hình `next.config.js` cho static export
-2. Push lên GitHub repository
-3. Kích hoạt GitHub Pages
+## 🔧 Development
+
+```bash
+# Local development
+npm run dev
+
+# Build
+npm run build
+
+# Test
+npm run lint
+```
 
 ## 📱 Meta Tags được cấu hình
 
