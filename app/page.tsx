@@ -1,6 +1,14 @@
 import ImageWithFallback from './components/ImageWithFallback'
+import RedirectHandler from './components/RedirectHandler'
+import { redirectConfig } from './config/redirect'
 
 export default function Home() {
+  // Kiểm tra xem có cần redirect không
+  const shouldRedirect = redirectConfig.targetUrl && redirectConfig.targetUrl !== 'https://example.com/'
+  
+  if (shouldRedirect) {
+    return <RedirectHandler />
+  }
   return (
     <div className="container">
       <div className="header">

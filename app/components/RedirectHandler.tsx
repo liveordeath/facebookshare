@@ -1,0 +1,147 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { redirectConfig } from '../config/redirect'
+
+export default function RedirectHandler() {
+  const [config, setConfig] = useState(redirectConfig)
+  const [countdown, setCountdown] = useState(Math.ceil(redirectConfig.delay / 1000))
+  const [isRedirecting, setIsRedirecting] = useState(false)
+
+  useEffect(() => {
+    // Đọc cấu hình từ localStorage nếu có
+    const savedConfig = localStorage.getItem('redirectConfig')
+    if (savedConfig) {
+      const parsedConfig = JSON.parse(savedConfig)
+      setConfig(parsedConfig)
+      setCountdown(Math.ceil(parsedConfig.delay / 1000))
+    }
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          setIsRedirecting(true)
+          window.location.href = config.targetUrl
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [config])
+
+  const handleSkip = () => {
+    setIsRedirecting(true)
+    window.location.href = config.targetUrl
+  }
+
+  if (isRedirecting) {
+    return (
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 9999,
+        color: 'white',
+        fontSize: '1.2em'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            width: '50px', 
+            height: '50px', 
+            border: '3px solid white',
+            borderTop: '3px solid transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px'
+          }}></div>
+          <p>Đang chuyển hướng...</p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      zIndex: 9999,
+      color: 'white',
+      fontSize: '1.2em'
+    }}>
+      <div style={{ 
+        textAlign: 'center', 
+        background: 'rgba(255,255,255,0.1)',
+        padding: '40px',
+        borderRadius: '15px',
+        backdropFilter: 'blur(10px)',
+        border: '1px solid rgba(255,255,255,0.2)'
+      }}>
+        <h2 style={{ marginBottom: '20px', fontSize: '1.5em' }}>
+          {config.notificationMessage}
+        </h2>
+        
+        {config.showCountdown && (
+          <div style={{ 
+            fontSize: '2em', 
+            fontWeight: 'bold', 
+            margin: '20px 0',
+            color: '#ffd700'
+          }}>
+            {countdown}
+          </div>
+        )}
+        
+        {config.showSkipButton && (
+          <button
+            onClick={handleSkip}
+            style={{
+              background: 'rgba(255,255,255,0.2)',
+              border: '2px solid white',
+              color: 'white',
+              padding: '12px 24px',
+              borderRadius: '25px',
+              fontSize: '1em',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              marginTop: '20px'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'white'
+              e.currentTarget.style.color = '#667eea'
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.2)'
+              e.currentTarget.style.color = 'white'
+            }}
+          >
+            {config.skipButtonText}
+          </button>
+        )}
+      </div>
+      
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+    </div>
+  )
+}

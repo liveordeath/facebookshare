@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         {
           url: process.env.NODE_ENV === 'production' ? '/facebookshare/images/image.png' : '/images/image.png',
           width: 1200,
-          height: 1200,
+          height: 630,
           alt: 'Hình ảnh demo',
         },
       ],
