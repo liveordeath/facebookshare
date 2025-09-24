@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { redirectConfig } from '../config/redirect'
 
 export default function RedirectHandler() {
-  const [config, setConfig] = useState(redirectConfig)
+  const [config, setConfig] = useState({...redirectConfig, targetUrl: ''})
   const [countdown, setCountdown] = useState(Math.ceil(redirectConfig.delay / 1000))
   const [countdownMs, setCountdownMs] = useState(redirectConfig.delay)
   const [isRedirecting, setIsRedirecting] = useState(false)
@@ -12,8 +12,14 @@ export default function RedirectHandler() {
   useEffect(() => {
     // Đọc cấu hình từ localStorage nếu có
     const savedConfig = localStorage.getItem('redirectConfig')
+    const randomUrl = localStorage.getItem('randomUrl')
+    
     if (savedConfig) {
       const parsedConfig = JSON.parse(savedConfig)
+      // Đảm bảo có targetUrl
+      if (!parsedConfig.targetUrl && randomUrl) {
+        parsedConfig.targetUrl = randomUrl
+      }
       setConfig(parsedConfig)
       setCountdown(Math.ceil(parsedConfig.delay / 1000))
       setCountdownMs(parsedConfig.delay)
@@ -21,10 +27,16 @@ export default function RedirectHandler() {
       // Nếu không hiển thị thông báo, redirect ngay lập tức
       if (!parsedConfig.showNotification) {
         setTimeout(() => {
-          window.location.href = parsedConfig.targetUrl
+          window.location.href = parsedConfig.targetUrl || randomUrl || 'https://example.com'
         }, parsedConfig.delay)
         return
       }
+    } else if (randomUrl) {
+      // Nếu không có config nhưng có randomUrl, sử dụng config mặc định
+      const defaultConfig = { ...redirectConfig, targetUrl: randomUrl }
+      setConfig(defaultConfig)
+      setCountdown(Math.ceil(redirectConfig.delay / 1000))
+      setCountdownMs(redirectConfig.delay)
     }
   }, [])
 
@@ -33,7 +45,8 @@ export default function RedirectHandler() {
       setCountdownMs(prev => {
         if (prev <= 1000) {
           setIsRedirecting(true)
-          window.location.href = config.targetUrl
+          const targetUrl = config.targetUrl || localStorage.getItem('randomUrl') || 'https://example.com'
+          window.location.href = targetUrl
           return 0
         }
         return prev - 1000
@@ -51,7 +64,8 @@ export default function RedirectHandler() {
 
   const handleSkip = () => {
     setIsRedirecting(true)
-    window.location.href = config.targetUrl
+    const targetUrl = config.targetUrl || localStorage.getItem('randomUrl') || 'https://example.com'
+    window.location.href = targetUrl
   }
 
   // Nếu không hiển thị thông báo, không render gì cả

@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Bỏ output: 'export' để hỗ trợ API routes trên Vercel
   trailingSlash: true,
   images: {
     unoptimized: true
   },
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/facebookshare' : '',
-  basePath: process.env.NODE_ENV === 'production' ? '/facebookshare' : '',
+  // Bỏ assetPrefix và basePath cho Vercel
+  experimental: {
+    serverComponentsExternalPackages: ['fs']
+  }
 }
 
 module.exports = nextConfig

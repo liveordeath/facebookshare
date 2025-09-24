@@ -1,0 +1,28 @@
+{
+  "config": {
+    "delay": 1,
+    "showNotification": false,
+    "notificationMessage": "",
+    "showSkipButton": false,
+    "skipButtonText": "",
+    "showCountdown": false
+  },
+  "urls": [
+    {
+      "id": 1,
+      "url": "https://s.shopee.vn/8zw3h5XsET",
+      "active": true
+    },
+    {
+      "id": 2,
+      "url": "https://s.shopee.vn/8zw3h5XsET",
+      "active": true
+    },
+    {
+      "id": 3,
+      "url": "https://s.shopee.vn/8zw3h5XsET",
+      "active": true
+    }
+  ],
+  "updatedAt": "2024-01-01T00:00:00.000Z"
+}

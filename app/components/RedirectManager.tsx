@@ -9,48 +9,62 @@ export default function RedirectManager() {
   const [shouldShowRedirect, setShouldShowRedirect] = useState(false)
 
   useEffect(() => {
-    // Đọc danh sách URLs từ localStorage
-    const savedUrls = localStorage.getItem('urlList')
-    let urlsToUse = urlList
-    
-    if (savedUrls) {
-      urlsToUse = JSON.parse(savedUrls)
-    }
-    
-    // Lấy URL ngẫu nhiên từ danh sách active
-    const activeUrls = urlsToUse.filter((item: any) => item.active)
-    let randomUrl = 'https://example.com'
-    
-    if (activeUrls.length > 0) {
-      const randomIndex = Math.floor(Math.random() * activeUrls.length)
-      randomUrl = activeUrls[randomIndex].url
-    }
-    
-    // Đọc cấu hình từ localStorage
-    const savedConfig = localStorage.getItem('redirectConfig')
-    if (savedConfig) {
-      const parsedConfig = JSON.parse(savedConfig)
-      setConfig(parsedConfig)
-      
-      if (parsedConfig.showNotification) {
-        // Hiển thị màn hình redirect với thông báo
-        setShouldShowRedirect(true)
-      } else {
-        // Redirect ngay lập tức mà không hiển thị gì
-        setTimeout(() => {
-          window.location.href = randomUrl
-        }, parsedConfig.delay)
-      }
-    } else {
-      // Sử dụng config mặc định
-      if (redirectConfig.showNotification) {
-        setShouldShowRedirect(true)
-      } else {
+    // Load config từ API
+    const loadConfigAndRedirect = async () => {
+      try {
+        const response = await fetch('/api/config')
+        let configToUse = redirectConfig
+        let urlsToUse = urlList
+        
+        if (response.ok) {
+          const data = await response.json()
+          configToUse = data.config
+          urlsToUse = data.urls
+        }
+        
+        // Lấy URL ngẫu nhiên từ danh sách active
+        const activeUrls = urlsToUse.filter((item: any) => item.active)
+        let randomUrl = 'https://example.com'
+        
+        if (activeUrls.length > 0) {
+          const randomIndex = Math.floor(Math.random() * activeUrls.length)
+          randomUrl = activeUrls[randomIndex].url
+        }
+        
+        // Lưu URL ngẫu nhiên vào localStorage để RedirectHandler có thể sử dụng
+        localStorage.setItem('randomUrl', randomUrl)
+        
+        // Thêm targetUrl vào config
+        configToUse.targetUrl = randomUrl
+        setConfig(configToUse)
+        
+        if (configToUse.showNotification) {
+          // Hiển thị màn hình redirect với thông báo
+          setShouldShowRedirect(true)
+        } else {
+          // Redirect ngay lập tức mà không hiển thị gì
+          setTimeout(() => {
+            window.location.href = randomUrl
+          }, configToUse.delay)
+        }
+      } catch (error) {
+        console.error('Error loading config:', error)
+        // Fallback: sử dụng config mặc định
+        const activeUrls = urlList.filter((item: any) => item.active)
+        let randomUrl = 'https://example.com'
+        
+        if (activeUrls.length > 0) {
+          const randomIndex = Math.floor(Math.random() * activeUrls.length)
+          randomUrl = activeUrls[randomIndex].url
+        }
+        
         setTimeout(() => {
           window.location.href = randomUrl
         }, redirectConfig.delay)
       }
     }
+    
+    loadConfigAndRedirect()
   }, [])
 
   if (shouldShowRedirect) {

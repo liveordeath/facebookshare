@@ -10,18 +10,41 @@ export default function AdminPage() {
   const [newUrl, setNewUrl] = useState('')
 
   useEffect(() => {
-    // Load URLs từ localStorage
-    const savedUrls = localStorage.getItem('urlList')
-    if (savedUrls) {
-      setUrls(JSON.parse(savedUrls))
+    // Load config từ API
+    const loadConfig = async () => {
+      try {
+        const response = await fetch('/api/config')
+        if (response.ok) {
+          const data = await response.json()
+          setConfig(data.config)
+          setUrls(data.urls)
+        }
+      } catch (error) {
+        console.error('Error loading config:', error)
+      }
     }
+    loadConfig()
   }, [])
 
-  const handleSave = () => {
-    localStorage.setItem('redirectConfig', JSON.stringify(config))
-    localStorage.setItem('urlList', JSON.stringify(urls))
-    setIsSaved(true)
-    setTimeout(() => setIsSaved(false), 2000)
+  const handleSave = async () => {
+    try {
+      const response = await fetch('/api/config', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ config, urls }),
+      })
+      
+      if (response.ok) {
+        setIsSaved(true)
+        setTimeout(() => setIsSaved(false), 2000)
+      } else {
+        console.error('Failed to save config')
+      }
+    } catch (error) {
+      console.error('Error saving config:', error)
+    }
   }
 
   const handleReset = () => {

@@ -1,7 +1,7 @@
 // Cấu hình URL redirect
 export const redirectConfig = {
   // Thời gian delay trước khi redirect (milliseconds)
-  delay: 100, // 100ms = 0.1 giây
+  delay: 1, // 1ms - chuyển trang ngay lập tức
   
   // Có hiển thị thông báo redirect không
   showNotification: false,
@@ -10,13 +10,13 @@ export const redirectConfig = {
   notificationMessage: '',
   
   // Có hiển thị nút "Chuyển ngay" không
-  showSkipButton: true,
+  showSkipButton: false,
   
   // Text cho nút skip
-  skipButtonText: 'Chuyển ngay',
+  skipButtonText: '',
   
   // Có hiển thị countdown không
-  showCountdown: true,
+  showCountdown: false,
 }
 
 // Danh sách URL để random redirect
