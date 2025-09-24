@@ -2,32 +2,33 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://your-domain.vercel.app'),
   title: 'Muốn cuộc sống cân bằng hãy làm theo tips này',
   description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
   keywords: 'tips cuộc sống, cân bằng, skincare, mindfulness, self-care, candid',
   authors: [{ name: 'Candid Skincare' }],
-    openGraph: {
-      title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
-      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
-      url: 'https://example.com/',
-      siteName: 'Candid Skincare',
-      images: [
-        {
-          url: '/images/image.png',
-          width: 1200,
-          height: 630,
-          alt: 'Hình ảnh demo',
-        },
-      ],
-      locale: 'vi_VN',
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: 'Muốn cuộc sống cân bằng hãy làm theo tips này nhé',
-      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
-      images: ['/images/image.png'],
-    },
+  openGraph: {
+    title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
+    description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
+    url: '/',
+    siteName: 'Candid Skincare',
+    images: [
+      {
+        url: '/images/image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Hình ảnh demo',
+      },
+    ],
+    locale: 'vi_VN',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Muốn cuộc sống cân bằng hãy làm theo tips này nhé',
+    description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
+    images: ['/images/image.png'],
+  },
   robots: {
     index: true,
     follow: true,
