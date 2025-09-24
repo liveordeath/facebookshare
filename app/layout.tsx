@@ -35,7 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: 'Candid Skincare' }],
     openGraph: {
       title: pageSettings.title,
-      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
+      description: '',
       url: '/',
       siteName: 'Candid Skincare',
       images: [
