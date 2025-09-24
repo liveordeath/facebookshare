@@ -7,7 +7,7 @@ let configData = {
   urls: urlList,
   pageSettings: {
     title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=630&fit=crop&crop=center'
+    image: 'https://picsum.photos/1200/630?random=1'
   },
   updatedAt: new Date().toISOString()
 }
@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       urls, 
       pageSettings: pageSettings || {
         title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
-        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=630&fit=crop&crop=center'
+        image: 'https://picsum.photos/1200/630?random=1'
       }
     }
     
