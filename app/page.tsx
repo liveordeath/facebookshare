@@ -11,7 +11,7 @@ export default function Home() {
       <div className="content">
         <div className="demo-image">
           <ImageWithFallback 
-            src="/images/image.png" 
+            src={process.env.NODE_ENV === 'production' ? '/facebookshare/images/image.png' : '/images/image.png'} 
             alt="4 Tips Cho Cuộc Sống Cân Bằng" 
             style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }}
             fallbackText="4 Tips Cho Cuộc Sống Cân Bằng"
