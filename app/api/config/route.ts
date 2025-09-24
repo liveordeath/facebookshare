@@ -1,33 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { redirectConfig, urlList } from '../../config/redirect'
-import { writeFile, readFile, mkdir } from 'fs/promises'
-import path from 'path'
 
-// File để lưu config
-const CONFIG_FILE = path.join(process.cwd(), 'config-data.json')
-
-// Đọc config từ file
-async function readConfig() {
-  try {
-    const data = await readFile(CONFIG_FILE, 'utf8')
-    return JSON.parse(data)
-  } catch (error) {
-    console.error('Error reading config:', error)
-    return { 
-      config: redirectConfig, 
-      urls: urlList,
-      pageSettings: {
-        title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
-        image: '/images/image.png'
-      }
-    }
-  }
+// In-memory storage (for Vercel compatibility)
+let configData = {
+  config: redirectConfig,
+  urls: urlList,
+  pageSettings: {
+    title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
+    image: '/images/image.png'
+  },
+  updatedAt: new Date().toISOString()
 }
 
-// Ghi config vào file
-async function writeConfig(data: any) {
+// Đọc config từ memory
+function readConfig() {
+  return configData
+}
+
+// Ghi config vào memory
+function writeConfig(data: any) {
   try {
-    await writeFile(CONFIG_FILE, JSON.stringify(data, null, 2))
+    configData = { ...data, updatedAt: new Date().toISOString() }
     return true
   } catch (error) {
     console.error('Error writing config:', error)
@@ -38,7 +31,7 @@ async function writeConfig(data: any) {
 // GET: Lấy config
 export async function GET() {
   try {
-    const data = await readConfig()
+    const data = readConfig()
     return NextResponse.json(data)
   } catch (error) {
     console.error('Error reading config:', error)
@@ -61,8 +54,8 @@ export async function POST(request: NextRequest) {
       }
     }
     
-    if (await writeConfig(data)) {
-      return NextResponse.json({ success: true, data: await readConfig() })
+    if (writeConfig(data)) {
+      return NextResponse.json({ success: true, data: readConfig() })
     } else {
       return NextResponse.json({ error: 'Failed to save config' }, { status: 500 })
     }

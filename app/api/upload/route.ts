@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { writeFile, mkdir } from 'fs/promises'
-import path from 'path'
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,27 +19,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File size must be less than 5MB' }, { status: 400 })
     }
 
+    // Convert file to base64 for storage (Vercel compatible)
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+    const base64 = buffer.toString('base64')
+    const dataUrl = `data:${file.type};base64,${base64}`
+
     // Generate unique filename
     const timestamp = Date.now()
     const extension = file.name.split('.').pop() || 'jpg'
     const filename = `uploaded-${timestamp}.${extension}`
     
-    // Create public/images directory if it doesn't exist
-    const publicDir = path.join(process.cwd(), 'public', 'images')
-    await mkdir(publicDir, { recursive: true })
-    
-    // Save file to public directory
-    const filepath = path.join(publicDir, filename)
-    const bytes = await file.arrayBuffer()
-    const buffer = Buffer.from(bytes)
-    await writeFile(filepath, buffer)
-
-    // Return public URL
-    const publicUrl = `/images/${filename}`
-    
     return NextResponse.json({ 
       success: true, 
-      url: publicUrl,
+      url: dataUrl,
       filename: filename,
       type: file.type,
       size: file.size
