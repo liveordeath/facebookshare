@@ -1,25 +1,56 @@
 'use client'
 
-import { useState } from 'react'
-import { redirectConfig, sampleUrls } from '../config/redirect'
+import { useState, useEffect } from 'react'
+import { redirectConfig, urlList } from '../config/redirect'
 
 export default function AdminPage() {
   const [config, setConfig] = useState(redirectConfig)
+  const [urls, setUrls] = useState(urlList)
   const [isSaved, setIsSaved] = useState(false)
+  const [newUrl, setNewUrl] = useState('')
+
+  useEffect(() => {
+    // Load URLs từ localStorage
+    const savedUrls = localStorage.getItem('urlList')
+    if (savedUrls) {
+      setUrls(JSON.parse(savedUrls))
+    }
+  }, [])
 
   const handleSave = () => {
-    // Trong thực tế, bạn có thể lưu vào localStorage hoặc API
     localStorage.setItem('redirectConfig', JSON.stringify(config))
+    localStorage.setItem('urlList', JSON.stringify(urls))
     setIsSaved(true)
     setTimeout(() => setIsSaved(false), 2000)
   }
 
   const handleReset = () => {
     setConfig(redirectConfig)
+    setUrls(urlList)
   }
 
-  const handleSampleUrl = (url: string) => {
-    setConfig(prev => ({ ...prev, targetUrl: url }))
+  const handleAddUrl = () => {
+    if (newUrl) {
+      const newId = Math.max(...urls.map(u => u.id), 0) + 1
+      setUrls([...urls, { id: newId, url: newUrl, active: true }])
+      setNewUrl('')
+    }
+  }
+
+  const handleDeleteUrl = (id: number) => {
+    setUrls(urls.filter(url => url.id !== id))
+  }
+
+  const handleToggleUrl = (id: number) => {
+    setUrls(urls.map(url => 
+      url.id === id ? { ...url, active: !url.active } : url
+    ))
+  }
+
+  const handleEditUrl = (id: number, value: string) => {
+    setUrls(urls.map(url => 
+      url.id === id ? { ...url, url: value } : url
+    ))
   }
 
   return (
@@ -32,26 +63,100 @@ export default function AdminPage() {
       boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
     }}>
       <h1 style={{ color: '#2c3e50', marginBottom: '30px' }}>
-        🔧 Cấu hình URL Redirect
+        🔧 Quản lý Random Redirect URLs
       </h1>
 
-      <div style={{ marginBottom: '20px' }}>
-        <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
-          URL đích:
-        </label>
-        <input
-          type="url"
-          value={config.targetUrl}
-          onChange={(e) => setConfig(prev => ({ ...prev, targetUrl: e.target.value }))}
-          style={{
-            width: '100%',
-            padding: '12px',
-            border: '2px solid #e9ecef',
-            borderRadius: '8px',
-            fontSize: '16px'
-          }}
-          placeholder="https://example.com"
-        />
+      {/* Thêm URL mới */}
+      <div style={{ 
+        marginBottom: '30px', 
+        padding: '20px', 
+        background: '#f8f9fa', 
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
+      }}>
+        <h3 style={{ color: '#2c3e50', marginBottom: '15px' }}>➕ Thêm URL mới:</h3>
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+          <input
+            type="url"
+            placeholder="https://example.com"
+            value={newUrl}
+            onChange={(e) => setNewUrl(e.target.value)}
+            style={{
+              flex: 1,
+              padding: '10px',
+              border: '2px solid #e9ecef',
+              borderRadius: '6px',
+              fontSize: '14px'
+            }}
+          />
+          <button
+            onClick={handleAddUrl}
+            style={{
+              padding: '10px 20px',
+              background: '#28a745',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            Thêm
+          </button>
+        </div>
+      </div>
+
+      {/* Danh sách URLs */}
+      <div style={{ marginBottom: '30px' }}>
+        <h3 style={{ color: '#2c3e50', marginBottom: '15px' }}>
+          📋 Danh sách URLs ({urls.filter(u => u.active).length} active)
+        </h3>
+        {urls.map((url) => (
+          <div key={url.id} style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: '15px',
+            marginBottom: '10px',
+            background: url.active ? '#e8f5e8' : '#f8f9fa',
+            border: `2px solid ${url.active ? '#28a745' : '#e9ecef'}`,
+            borderRadius: '8px'
+          }}>
+            <input
+              type="checkbox"
+              checked={url.active}
+              onChange={() => handleToggleUrl(url.id)}
+              style={{ transform: 'scale(1.2)' }}
+            />
+            <input
+              type="url"
+              value={url.url}
+              onChange={(e) => handleEditUrl(url.id, e.target.value)}
+              style={{
+                flex: 1,
+                padding: '8px',
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                fontSize: '14px',
+                background: url.active ? 'white' : '#f8f9fa'
+              }}
+            />
+            <button
+              onClick={() => handleDeleteUrl(url.id)}
+              style={{
+                padding: '8px 12px',
+                background: '#dc3545',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '12px'
+              }}
+            >
+              🗑️
+            </button>
+          </div>
+        ))}
       </div>
 
       <div style={{ marginBottom: '20px' }}>
@@ -139,28 +244,6 @@ export default function AdminPage() {
         />
       </div>
 
-      <div style={{ marginBottom: '30px' }}>
-        <h3 style={{ color: '#2c3e50', marginBottom: '15px' }}>URL mẫu:</h3>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-          {Object.entries(sampleUrls).map(([key, url]) => (
-            <button
-              key={key}
-              onClick={() => handleSampleUrl(url)}
-              style={{
-                padding: '8px 16px',
-                background: '#667eea',
-                color: 'white',
-                border: 'none',
-                borderRadius: '20px',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
-            >
-              {key}
-            </button>
-          ))}
-        </div>
-      </div>
 
       <div style={{ display: 'flex', gap: '15px' }}>
         <button

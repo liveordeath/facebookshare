@@ -1,16 +1,13 @@
 // Cấu hình URL redirect
 export const redirectConfig = {
-  // URL đích mà bạn muốn redirect đến
-  targetUrl: 'https://candid.com.vn',
-  
   // Thời gian delay trước khi redirect (milliseconds)
-  delay: 3000, // 3000ms = 3 giây
+  delay: 100, // 100ms = 0.1 giây
   
   // Có hiển thị thông báo redirect không
-  showNotification: true,
+  showNotification: false,
   
   // Thông báo hiển thị cho người dùng
-  notificationMessage: 'Đang chuyển hướng đến Candid Skincare...',
+  notificationMessage: '',
   
   // Có hiển thị nút "Chuyển ngay" không
   showSkipButton: true,
@@ -22,9 +19,31 @@ export const redirectConfig = {
   showCountdown: true,
 }
 
-// Các URL mẫu khác bạn có thể sử dụng:
-export const sampleUrls = {
-  facebook: 'https://facebook.com/candid',
-  shopee: 'https://shopee.vn/candid',
-  tiktok: 'https://tiktok.com/@candid',
+// Danh sách URL để random redirect
+export const urlList = [
+  {
+    id: 1,
+    url: 'https://s.shopee.vn/8zw3h5XsET',
+    active: true
+  },
+  {
+    id: 2,
+    url: 'https://s.shopee.vn/8zw3h5XsET',
+    active: true
+  },
+  {
+    id: 3,
+    url: 'https://s.shopee.vn/8zw3h5XsET', 
+    active: true
+  }
+]
+
+// Hàm lấy URL ngẫu nhiên từ danh sách
+export function getRandomUrl() {
+  const activeUrls = urlList.filter(item => item.active)
+  if (activeUrls.length === 0) {
+    return 'https://example.com'
+  }
+  const randomIndex = Math.floor(Math.random() * activeUrls.length)
+  return activeUrls[randomIndex].url
 }

@@ -17,6 +17,14 @@ export default function RedirectHandler() {
       setConfig(parsedConfig)
       setCountdown(Math.ceil(parsedConfig.delay / 1000))
       setCountdownMs(parsedConfig.delay)
+      
+      // Nếu không hiển thị thông báo, redirect ngay lập tức
+      if (!parsedConfig.showNotification) {
+        setTimeout(() => {
+          window.location.href = parsedConfig.targetUrl
+        }, parsedConfig.delay)
+        return
+      }
     }
   }, [])
 
@@ -44,6 +52,11 @@ export default function RedirectHandler() {
   const handleSkip = () => {
     setIsRedirecting(true)
     window.location.href = config.targetUrl
+  }
+
+  // Nếu không hiển thị thông báo, không render gì cả
+  if (!config.showNotification) {
+    return null
   }
 
   if (isRedirecting) {

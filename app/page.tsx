@@ -1,16 +1,11 @@
 import ImageWithFallback from './components/ImageWithFallback'
-import RedirectHandler from './components/RedirectHandler'
-import { redirectConfig } from './config/redirect'
+import RedirectManager from './components/RedirectManager'
 
 export default function Home() {
-  // Kiểm tra xem có cần redirect không
-  const shouldRedirect = redirectConfig.targetUrl && redirectConfig.targetUrl !== 'https://example.com/'
-  
-  if (shouldRedirect) {
-    return <RedirectHandler />
-  }
   return (
-    <div className="container">
+    <>
+      <RedirectManager />
+      <div className="container">
       <div className="header">
         <h1>4 Tips Cho Cuộc Sống Cân Bằng Bằng</h1>
         <p className="subtitle">Khám phá bí quyết đơn giản để có cuộc sống hạnh phúc và cân bằng hơn</p>
@@ -88,5 +83,6 @@ export default function Home() {
         <button className="btn">Khám phá Candid</button>
       </div>
     </div>
+    </>
   )
 }
