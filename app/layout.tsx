@@ -30,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://facebookshare-roan.vercel.app'),
     title: pageSettings.title,
-    description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
+    description: '',
     keywords: 'tips cuộc sống, cân bằng, skincare, mindfulness, self-care, candid',
     authors: [{ name: 'Candid Skincare' }],
     openGraph: {
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
     twitter: {
       card: 'summary_large_image',
       title: pageSettings.title,
-      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
+      description: '',
       images: [pageSettings.image],
     },
     robots: {
