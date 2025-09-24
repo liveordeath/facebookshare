@@ -1,23 +1,42 @@
 import ImageWithFallback from './components/ImageWithFallback'
 import RedirectManager from './components/RedirectManager'
 
-export default function Home() {
+export default async function Home() {
+  // Load page settings from API
+  let pageSettings = {
+    title: '4 Tips Cho Cuộc Sống Cân Bằng Bằng',
+    image: '/images/image.png'
+  }
+
+  try {
+    const response = await fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/config`, {
+      cache: 'no-store'
+    })
+    if (response.ok) {
+      const data = await response.json()
+      if (data.pageSettings) {
+        pageSettings = data.pageSettings
+      }
+    }
+  } catch (error) {
+    console.error('Error loading page settings:', error)
+  }
   return (
     <>
       <RedirectManager />
       <div className="container">
       <div className="header">
-        <h1>4 Tips Cho Cuộc Sống Cân Bằng Bằng</h1>
+        <h1>{pageSettings.title}</h1>
         <p className="subtitle">Khám phá bí quyết đơn giản để có cuộc sống hạnh phúc và cân bằng hơn</p>
       </div>
       
       <div className="content">
         <div className="demo-image">
           <ImageWithFallback 
-            src="/images/image.png" 
-            alt="4 Tips Cho Cuộc Sống Cân Bằng" 
+            src={pageSettings.image} 
+            alt={pageSettings.title} 
             style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }}
-            fallbackText="4 Tips Cho Cuộc Sống Cân Bằng"
+            fallbackText={pageSettings.title}
           />
         </div>
 

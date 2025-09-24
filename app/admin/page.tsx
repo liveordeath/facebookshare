@@ -8,6 +8,11 @@ export default function AdminPage() {
   const [urls, setUrls] = useState(urlList)
   const [isSaved, setIsSaved] = useState(false)
   const [newUrl, setNewUrl] = useState('')
+  const [pageSettings, setPageSettings] = useState({
+    title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
+    image: '/images/image.png'
+  })
+  const [isUploading, setIsUploading] = useState(false)
 
   useEffect(() => {
     // Load config từ API
@@ -18,6 +23,9 @@ export default function AdminPage() {
           const data = await response.json()
           setConfig(data.config)
           setUrls(data.urls)
+          if (data.pageSettings) {
+            setPageSettings(data.pageSettings)
+          }
         }
       } catch (error) {
         console.error('Error loading config:', error)
@@ -33,7 +41,7 @@ export default function AdminPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ config, urls }),
+        body: JSON.stringify({ config, urls, pageSettings }),
       })
       
       if (response.ok) {
@@ -76,6 +84,33 @@ export default function AdminPage() {
     ))
   }
 
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    setIsUploading(true)
+    try {
+      const formData = new FormData()
+      formData.append('image', file)
+
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        setPageSettings(prev => ({ ...prev, image: data.url }))
+      } else {
+        console.error('Upload failed')
+      }
+    } catch (error) {
+      console.error('Upload error:', error)
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
   return (
     <div style={{ 
       maxWidth: '800px', 
@@ -88,6 +123,79 @@ export default function AdminPage() {
       <h1 style={{ color: '#2c3e50', marginBottom: '30px' }}>
         🔧 Quản lý Random Redirect URLs
       </h1>
+
+      {/* Page Settings */}
+      <div style={{ 
+        marginBottom: '30px', 
+        padding: '20px', 
+        background: '#f8f9fa', 
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
+      }}>
+        <h3 style={{ color: '#2c3e50', marginBottom: '15px' }}>📄 Cài đặt trang</h3>
+        
+        {/* Title Editor */}
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
+            Tiêu đề trang:
+          </label>
+          <input
+            type="text"
+            value={pageSettings.title}
+            onChange={(e) => setPageSettings(prev => ({ ...prev, title: e.target.value }))}
+            style={{
+              width: '100%',
+              padding: '12px',
+              border: '2px solid #e9ecef',
+              borderRadius: '8px',
+              fontSize: '16px'
+            }}
+            placeholder="Nhập tiêu đề trang..."
+          />
+        </div>
+
+        {/* Image Upload */}
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
+            Hình ảnh trang:
+          </label>
+          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+            <div style={{ flex: 1 }}>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{
+                  width: '100%',
+                  padding: '8px',
+                  border: '2px solid #e9ecef',
+                  borderRadius: '6px',
+                  fontSize: '14px'
+                }}
+                disabled={isUploading}
+              />
+              {isUploading && (
+                <div style={{ color: '#007bff', fontSize: '14px', marginTop: '5px' }}>
+                  ⏳ Đang upload...
+                </div>
+              )}
+            </div>
+            <div style={{ width: '100px', height: '60px', border: '1px solid #ddd', borderRadius: '4px', overflow: 'hidden' }}>
+              <img 
+                src={pageSettings.image} 
+                alt="Preview" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none'
+                }}
+              />
+            </div>
+          </div>
+          <div style={{ marginTop: '5px', fontSize: '12px', color: '#6c757d' }}>
+            Hỗ trợ: JPG, PNG, GIF. Tối đa 5MB
+          </div>
+        </div>
+      </div>
 
       {/* Thêm URL mới */}
       <div style={{ 

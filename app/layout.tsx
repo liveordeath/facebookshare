@@ -1,45 +1,67 @@
 import type { Metadata } from 'next'
 import './globals.css'
 
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://your-domain.vercel.app'),
-  title: 'Muốn cuộc sống cân bằng hãy làm theo tips này',
-  description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
-  keywords: 'tips cuộc sống, cân bằng, skincare, mindfulness, self-care, candid',
-  authors: [{ name: 'Candid Skincare' }],
-  openGraph: {
+// Dynamic metadata function
+export async function generateMetadata(): Promise<Metadata> {
+  let pageSettings = {
     title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
+    image: '/images/image.png'
+  }
+
+  try {
+    const response = await fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/config`, {
+      cache: 'no-store'
+    })
+    if (response.ok) {
+      const data = await response.json()
+      if (data.pageSettings) {
+        pageSettings = data.pageSettings
+      }
+    }
+  } catch (error) {
+    console.error('Error loading page settings:', error)
+  }
+
+  return {
+    metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://facebookshare-roan.vercel.app'),
+    title: pageSettings.title,
     description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
-    url: '/',
-    siteName: 'Candid Skincare',
-    images: [
-      {
-        url: '/images/image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Hình ảnh demo',
-      },
-    ],
-    locale: 'vi_VN',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Muốn cuộc sống cân bằng hãy làm theo tips này nhé',
-    description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
-    images: ['/images/image.png'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    keywords: 'tips cuộc sống, cân bằng, skincare, mindfulness, self-care, candid',
+    authors: [{ name: 'Candid Skincare' }],
+    openGraph: {
+      title: pageSettings.title,
+      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
+      url: '/',
+      siteName: 'Candid Skincare',
+      images: [
+        {
+          url: pageSettings.image,
+          width: 1200,
+          height: 630,
+          alt: 'Hình ảnh demo',
+        },
+      ],
+      locale: 'vi_VN',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: pageSettings.title,
+      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
+      images: [pageSettings.image],
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
+  }
 }
 
 export default function RootLayout({

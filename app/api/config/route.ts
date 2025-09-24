@@ -42,9 +42,17 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { config, urls } = body
+    const { config, urls, pageSettings } = body
     
-    const data = { config, urls, updatedAt: new Date().toISOString() }
+    const data = { 
+      config, 
+      urls, 
+      pageSettings: pageSettings || {
+        title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
+        image: '/images/image.png'
+      },
+      updatedAt: new Date().toISOString() 
+    }
     
     if (await writeConfig(data)) {
       return NextResponse.json({ success: true, data })
