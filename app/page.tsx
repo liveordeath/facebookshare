@@ -4,7 +4,7 @@ import RedirectManager from './components/RedirectManager'
 export default async function Home() {
   // Load page settings from API
       let pageSettings = {
-        title: '4 Tips Cho Cuộc Sống Cân Bằng Bằng',
+        title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
         image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=630&fit=crop&crop=center'
       }
 
