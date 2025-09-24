@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: '4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare',
+  title: 'Muốn cuộc sống cân bằng hãy làm theo tips này',
   description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
   keywords: 'tips cuộc sống, cân bằng, skincare, mindfulness, self-care, candid',
   authors: [{ name: 'Candid Skincare' }],
     openGraph: {
-      title: 'Muốn cuộc sống cân bằng hãy làm theo tips này',
+      title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
       description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
       url: 'https://example.com/',
       siteName: 'Candid Skincare',
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     },
     twitter: {
       card: 'summary_large_image',
-      title: '4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare',
+      title: 'Muốn cuộc sống cân bằng hãy làm theo tips này nhé',
       description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
       images: [process.env.NODE_ENV === 'production' ? '/facebookshare/images/image.png' : '/images/image.png'],
     },
