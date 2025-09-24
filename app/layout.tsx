@@ -3,10 +3,10 @@ import './globals.css'
 
 // Dynamic metadata function
 export async function generateMetadata(): Promise<Metadata> {
-  let pageSettings = {
-    title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
-    image: '/images/image.png'
-  }
+      let pageSettings = {
+        title: ':) Muốn cuộc sống cân bằng hãy làm theo tips này',
+        image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=630&fit=crop&crop=center'
+      }
 
   try {
     const response = await fetch(`${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}/api/config`, {
