@@ -4,7 +4,7 @@ export const redirectConfig = {
   targetUrl: 'https://candid.com.vn',
   
   // Thời gian delay trước khi redirect (milliseconds)
-  delay: 3000, // 3 giây
+  delay: 3000, // 3000ms = 3 giây
   
   // Có hiển thị thông báo redirect không
   showNotification: true,
@@ -24,10 +24,7 @@ export const redirectConfig = {
 
 // Các URL mẫu khác bạn có thể sử dụng:
 export const sampleUrls = {
-  candid: 'https://candid.com.vn',
   facebook: 'https://facebook.com/candid',
-  instagram: 'https://instagram.com/candid',
   shopee: 'https://shopee.vn/candid',
-  lazada: 'https://lazada.vn/candid',
   tiktok: 'https://tiktok.com/@candid',
 }

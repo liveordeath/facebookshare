@@ -6,6 +6,7 @@ import { redirectConfig } from '../config/redirect'
 export default function RedirectHandler() {
   const [config, setConfig] = useState(redirectConfig)
   const [countdown, setCountdown] = useState(Math.ceil(redirectConfig.delay / 1000))
+  const [countdownMs, setCountdownMs] = useState(redirectConfig.delay)
   const [isRedirecting, setIsRedirecting] = useState(false)
 
   useEffect(() => {
@@ -15,15 +16,22 @@ export default function RedirectHandler() {
       const parsedConfig = JSON.parse(savedConfig)
       setConfig(parsedConfig)
       setCountdown(Math.ceil(parsedConfig.delay / 1000))
+      setCountdownMs(parsedConfig.delay)
     }
   }, [])
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCountdown(prev => {
-        if (prev <= 1) {
+      setCountdownMs(prev => {
+        if (prev <= 1000) {
           setIsRedirecting(true)
           window.location.href = config.targetUrl
+          return 0
+        }
+        return prev - 1000
+      })
+      setCountdown(prev => {
+        if (prev <= 1) {
           return 0
         }
         return prev - 1
@@ -104,7 +112,7 @@ export default function RedirectHandler() {
             margin: '20px 0',
             color: '#ffd700'
           }}>
-            {countdown}
+            {countdown}.{Math.floor((countdownMs % 1000) / 100)}
           </div>
         )}
         

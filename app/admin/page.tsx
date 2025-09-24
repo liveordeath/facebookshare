@@ -56,22 +56,57 @@ export default function AdminPage() {
 
       <div style={{ marginBottom: '20px' }}>
         <label style={{ display: 'block', marginBottom: '10px', fontWeight: 'bold' }}>
-          Thời gian delay (giây):
+          Thời gian delay (milliseconds):
         </label>
-        <input
-          type="number"
-          value={config.delay / 1000}
-          onChange={(e) => setConfig(prev => ({ ...prev, delay: parseInt(e.target.value) * 1000 }))}
-          style={{
-            width: '100px',
-            padding: '12px',
-            border: '2px solid #e9ecef',
-            borderRadius: '8px',
-            fontSize: '16px'
-          }}
-          min="1"
-          max="10"
-        />
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <input
+            type="number"
+            value={config.delay}
+            onChange={(e) => setConfig(prev => ({ ...prev, delay: parseInt(e.target.value) || 0 }))}
+            style={{
+              width: '150px',
+              padding: '12px',
+              border: '2px solid #e9ecef',
+              borderRadius: '8px',
+              fontSize: '16px'
+            }}
+            min="0"
+            max="30000"
+            placeholder="3000"
+          />
+          <span style={{ color: '#6c757d', fontSize: '14px' }}>
+            ({Math.round(config.delay / 1000 * 10) / 10}s)
+          </span>
+        </div>
+        <div style={{ marginTop: '5px', fontSize: '12px', color: '#6c757d' }}>
+          Gợi ý: 1000ms = 1s, 3000ms = 3s, 5000ms = 5s
+        </div>
+        <div style={{ marginTop: '10px', display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+          {[
+            { label: '0.5s', value: 500 },
+            { label: '1s', value: 1000 },
+            { label: '2s', value: 2000 },
+            { label: '3s', value: 3000 },
+            { label: '5s', value: 5000 },
+            { label: '10s', value: 10000 }
+          ].map(({ label, value }) => (
+            <button
+              key={value}
+              onClick={() => setConfig(prev => ({ ...prev, delay: value }))}
+              style={{
+                padding: '4px 8px',
+                background: config.delay === value ? '#667eea' : '#f8f9fa',
+                color: config.delay === value ? 'white' : '#6c757d',
+                border: '1px solid #e9ecef',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '12px'
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div style={{ marginBottom: '20px' }}>
