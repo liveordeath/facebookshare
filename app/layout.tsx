@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       siteName: 'Candid Skincare',
       images: [
         {
-          url: process.env.NODE_ENV === 'production' ? '/facebookshare/images/image.png' : '/images/image.png',
+          url: '/images/image.png',
           width: 1200,
           height: 630,
           alt: 'Hình ảnh demo',
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
       card: 'summary_large_image',
       title: 'Muốn cuộc sống cân bằng hãy làm theo tips này nhé',
       description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
-      images: [process.env.NODE_ENV === 'production' ? '/facebookshare/images/image.png' : '/images/image.png'],
+      images: ['/images/image.png'],
     },
   robots: {
     index: true,
