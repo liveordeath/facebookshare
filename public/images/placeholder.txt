@@ -1,0 +1,6 @@
+# Thư mục chứa hình ảnh
+# Đặt các file ảnh vào đây:
+# - logo.png
+# - hero-image.jpg
+# - og-image.jpg (cho Open Graph)
+# - favicon.ico

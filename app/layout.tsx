@@ -2,32 +2,32 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Tiêu đề bài viết',
-  description: 'Mô tả ngắn gọn',
-  keywords: 'demo, website, open graph, nextjs',
-  authors: [{ name: 'Demo Author' }],
-  openGraph: {
-    title: 'Tiêu đề bài viết',
-    description: 'Mô tả ngắn gọn',
-    url: 'https://example.com/',
-    siteName: 'Website Demo',
-    images: [
-      {
-        url: 'https://example.com/image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Hình ảnh demo',
-      },
-    ],
-    locale: 'vi_VN',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Tiêu đề bài viết',
-    description: 'Mô tả ngắn gọn',
-    images: ['https://example.com/image.jpg'],
-  },
+  title: '4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare',
+  description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
+  keywords: 'tips cuộc sống, cân bằng, skincare, mindfulness, self-care, candid',
+  authors: [{ name: 'Candid Skincare' }],
+    openGraph: {
+      title: '4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare',
+      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện.',
+      url: 'https://example.com/',
+      siteName: 'Candid Skincare',
+      images: [
+        {
+          url: '/images/image.png',
+          width: 1200,
+          height: 630,
+          alt: 'Hình ảnh demo',
+        },
+      ],
+      locale: 'vi_VN',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: '4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare',
+      description: 'Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn.',
+      images: ['/images/image.png'],
+    },
   robots: {
     index: true,
     follow: true,

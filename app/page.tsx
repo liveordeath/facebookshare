@@ -1,71 +1,102 @@
+import ImageWithFallback from './components/ImageWithFallback'
+
 export default function Home() {
   return (
     <div className="container">
       <div className="header">
-        <h1>Tiêu đề bài viết</h1>
-        <p className="subtitle">Mô tả ngắn gọn</p>
+        <h1>4 Tips Cho Cuộc Sống Cân Bằng</h1>
+        <p className="subtitle">Khám phá bí quyết đơn giản để có cuộc sống hạnh phúc và cân bằng hơn</p>
       </div>
       
       <div className="content">
-        <p>Đây là trang web demo được xây dựng với Next.js và các meta tags Open Graph được cấu hình sẵn. Các meta tags này sẽ giúp hiển thị thông tin đẹp mắt khi chia sẻ link trên các mạng xã hội như Facebook, Twitter, LinkedIn, v.v.</p>
-        
         <div className="demo-image">
-          Hình ảnh demo
+          <ImageWithFallback 
+            src="/images/image.png" 
+            alt="4 Tips Cho Cuộc Sống Cân Bằng" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '10px' }}
+            fallbackText="4 Tips Cho Cuộc Sống Cân Bằng"
+          />
         </div>
-        
-        <div className="nextjs-info">
-          <h3>🚀 Next.js Features:</h3>
-          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
-            <li>Server-Side Rendering (SSR)</li>
-            <li>Static Site Generation (SSG)</li>
-            <li>Automatic Code Splitting</li>
-            <li>Built-in CSS Support</li>
-            <li>API Routes</li>
-            <li>Image Optimization</li>
-          </ul>
-        </div>
+
+        <p>Trong cuộc sống hiện đại bận rộn, việc duy trì sự cân bằng giữa công việc, gia đình và bản thân là một thách thức lớn. Tại Candid, chúng tôi tin rằng một cuộc sống cân bằng bắt đầu từ việc chăm sóc bản thân một cách toàn diện. Dưới đây là 4 tips đơn giản nhưng hiệu quả để bạn có thể áp dụng ngay hôm nay.</p>
         
         <div className="meta-info">
-          <h3>🔗 Các Meta Tags Open Graph đã được cấu hình:</h3>
-          <div className="meta-tag">&lt;meta property="og:title" content="Tiêu đề bài viết"&gt;</div>
-          <div className="meta-tag">&lt;meta property="og:description" content="Mô tả ngắn gọn"&gt;</div>
-          <div className="meta-tag">&lt;meta property="og:image" content="https://example.com/image.jpg"&gt;</div>
+          <h3>🌟 Tip 1: Thiết lập Routine Skincare Đơn Giản</h3>
+          <p>Một làn da khỏe mạnh là nền tảng của sự tự tin. Không cần quá phức tạp, chỉ cần 3 bước cơ bản:</p>
+          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
+            <li><strong>Làm sạch:</strong> Sử dụng sữa rửa mặt dịu nhẹ mỗi sáng và tối</li>
+            <li><strong>Dưỡng ẩm:</strong> Thoa kem dưỡng ẩm phù hợp với loại da</li>
+            <li><strong>Bảo vệ:</strong> Luôn sử dụng kem chống nắng SPF 30+ vào ban ngày</li>
+          </ul>
+          <p>Routine đơn giản này chỉ mất 5 phút mỗi ngày nhưng sẽ mang lại hiệu quả lâu dài cho làn da của bạn.</p>
+        </div>
+
+        <div className="meta-info">
+          <h3>🧘‍♀️ Tip 2: Thực Hành Mindfulness Mỗi Ngày</h3>
+          <p>Mindfulness không chỉ là thiền định, mà là cách bạn sống trong hiện tại một cách có ý thức:</p>
+          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
+            <li><strong>Hít thở sâu:</strong> Dành 5 phút mỗi sáng để hít thở sâu và tập trung</li>
+            <li><strong>Ăn uống có ý thức:</strong> Thưởng thức từng miếng ăn, không vừa ăn vừa xem điện thoại</li>
+            <li><strong>Đi bộ thiền:</strong> Đi bộ chậm rãi và quan sát xung quanh</li>
+          </ul>
+          <p>Những hoạt động nhỏ này giúp giảm stress và tăng cường sự tập trung trong công việc.</p>
+        </div>
+
+        <div className="meta-info">
+          <h3>💤 Tip 3: Ưu Tiên Giấc Ngủ Chất Lượng</h3>
+          <p>Giấc ngủ là thời gian cơ thể tự phục hồi và tái tạo. Để có giấc ngủ ngon:</p>
+          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
+            <li><strong>Thời gian cố định:</strong> Đi ngủ và thức dậy cùng một giờ mỗi ngày</li>
+            <li><strong>Không gian thoải mái:</strong> Phòng ngủ tối, mát mẻ và yên tĩnh</li>
+            <li><strong>Tránh màn hình:</strong> Tắt điện thoại và TV 1 giờ trước khi ngủ</li>
+            <li><strong>Routine trước ngủ:</strong> Đọc sách, nghe nhạc nhẹ hoặc thiền</li>
+          </ul>
+          <p>Một giấc ngủ ngon 7-8 tiếng sẽ giúp bạn tỉnh táo và năng động hơn vào ngày hôm sau.</p>
+        </div>
+
+        <div className="meta-info">
+          <h3>🎯 Tip 4: Đặt Ranh Giới Rõ Ràng</h3>
+          <p>Học cách nói "không" và đặt ranh giới là kỹ năng quan trọng để bảo vệ năng lượng của bạn:</p>
+          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
+            <li><strong>Thời gian làm việc:</strong> Tắt thông báo sau giờ làm việc</li>
+            <li><strong>Nghỉ ngơi:</strong> Dành ít nhất 1 ngày cuối tuần cho bản thân</li>
+            <li><strong>Ưu tiên:</strong> Lập danh sách việc quan trọng và tập trung vào đó</li>
+            <li><strong>Giao tiếp:</strong> Thể hiện nhu cầu của bạn một cách rõ ràng</li>
+          </ul>
+          <p>Ranh giới rõ ràng giúp bạn tránh kiệt sức và duy trì năng lượng tích cực.</p>
+        </div>
+
+        <div className="nextjs-info">
+          <h3>💡 Lời Khuyên Từ Candid</h3>
+          <p>Cuộc sống cân bằng không phải là đích đến mà là một hành trình. Hãy bắt đầu với những thay đổi nhỏ và kiên trì thực hiện. Tại Candid, chúng tôi tin rằng skincare đơn giản và hiệu quả là bước đầu tiên để bạn cảm thấy tự tin và hạnh phúc hơn.</p>
+          <p><strong>Nhớ rằng:</strong> Bạn xứng đáng được chăm sóc và yêu thương. Hãy dành thời gian cho bản thân mỗi ngày, dù chỉ là 10 phút.</p>
+        </div>
+
+        <div className="meta-info">
+          <h3>🔗 Meta Tags Open Graph đã được cấu hình:</h3>
+          <div className="meta-tag">&lt;meta property="og:title" content="4 Tips Cho Cuộc Sống Cân Bằng - Candid Skincare"&gt;</div>
+          <div className="meta-tag">&lt;meta property="og:description" content="Khám phá 4 bí quyết đơn giản để có cuộc sống cân bằng và hạnh phúc hơn. Từ skincare đến mindfulness, tìm hiểu cách chăm sóc bản thân toàn diện."&gt;</div>
+          <div className="meta-tag">&lt;meta property="og:image" content="/images/image.png"&gt;</div>
           <div className="meta-tag">&lt;meta property="og:url" content="https://example.com/"&gt;</div>
         </div>
         
-        <p>Bạn có thể tùy chỉnh các giá trị trong file <code>app/layout.tsx</code> để phù hợp với nội dung thực tế của trang web. Khi chia sẻ link này trên Facebook hoặc các mạng xã hội khác, chúng sẽ hiển thị thông tin theo các meta tags đã cấu hình.</p>
-        
         <div className="meta-info">
-          <h3>📝 Cách tùy chỉnh Meta Tags:</h3>
-          <p>Mở file <code>app/layout.tsx</code> và chỉnh sửa các giá trị trong object <code>metadata</code>:</p>
-          <div className="meta-tag">
-            export const metadata: Metadata = {'{'}
-            <br />
-            &nbsp;&nbsp;title: 'Tiêu đề của bạn',
-            <br />
-            &nbsp;&nbsp;description: 'Mô tả của bạn',
-            <br />
-            &nbsp;&nbsp;openGraph: {'{'}
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;title: 'Tiêu đề Open Graph',
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;description: 'Mô tả Open Graph',
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;url: 'https://your-domain.com',
-            <br />
-            &nbsp;&nbsp;&nbsp;&nbsp;images: ['https://your-image.jpg']
-            <br />
-            &nbsp;&nbsp;{'}'}
-            <br />
-            {'}'}
-          </div>
+          <h3>📱 Cách hoạt động của Open Graph:</h3>
+          <p>Khi bạn chia sẻ link này trên Facebook, Twitter, LinkedIn hoặc các mạng xã hội khác, các meta tags trên sẽ tự động hiển thị:</p>
+          <ul style={{ marginLeft: '20px', marginTop: '10px' }}>
+            <li><strong>og:title</strong> - Tiêu đề hiển thị khi chia sẻ</li>
+            <li><strong>og:description</strong> - Mô tả ngắn gọn về nội dung</li>
+            <li><strong>og:image</strong> - Hình ảnh đại diện cho bài viết</li>
+            <li><strong>og:url</strong> - Link chính thức của trang web</li>
+          </ul>
+          <p>Điều này giúp bài viết của bạn trông chuyên nghiệp và hấp dẫn hơn khi được chia sẻ trên mạng xã hội.</p>
         </div>
       </div>
       
       <div className="footer">
-        <p>Trang web demo với Next.js và Open Graph Meta Tags</p>
+        <p>Chia sẻ bài viết này với bạn bè và bắt đầu hành trình cân bằng cuộc sống ngay hôm nay!</p>
         <button className="btn">Chia sẻ</button>
-        <button className="btn">Liên hệ</button>
+        <button className="btn">Khám phá Candid</button>
       </div>
     </div>
   )

@@ -1,0 +1,6 @@
+# Thư mục chứa assets khác
+# Đặt các file assets vào đây:
+# - fonts/
+# - videos/
+# - documents/
+# - other files

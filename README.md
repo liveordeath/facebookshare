@@ -76,3 +76,37 @@ export const metadata: Metadata = {
 ## 🎨 Styling
 
 Sử dụng CSS modules và global styles trong `app/globals.css`.
+
+## 📁 Assets
+
+### Cấu trúc thư mục assets:
+```
+public/
+├── images/           # Hình ảnh chính
+│   ├── og-image.jpg # Hình ảnh Open Graph (1200x630px)
+│   ├── hero.jpg     # Hình ảnh hero
+│   └── logo.png     # Logo website
+├── icons/           # Icons và favicon
+│   ├── favicon.ico
+│   ├── apple-touch-icon.png
+│   └── android-chrome-192x192.png
+└── assets/          # Assets khác
+    ├── fonts/       # Font files
+    ├── videos/      # Video files
+    └── documents/   # PDF, docs
+```
+
+### Cách sử dụng hình ảnh:
+```tsx
+// Trong component
+<img src="/images/og-image.jpg" alt="Description" />
+
+// Trong CSS
+background-image: url('/images/hero.jpg');
+```
+
+### Tối ưu hình ảnh:
+- **Open Graph**: 1200x630px, JPG/PNG, < 1MB
+- **Hero images**: 1920x1080px, JPG, < 500KB
+- **Icons**: 32x32px (favicon), 192x192px (Android)
+- **Logo**: SVG hoặc PNG với background trong suốt
