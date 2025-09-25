@@ -45,7 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: pageSettings.image,
-          width: 1200,
+          width: 900,
           height: 1200,
         },
       ],
