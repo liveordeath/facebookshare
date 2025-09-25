@@ -46,7 +46,25 @@ export default function RedirectHandler() {
         if (prev <= 1000) {
           setIsRedirecting(true)
           const targetUrl = config.targetUrl || localStorage.getItem('randomUrl') || 'https://example.com'
-          window.location.href = targetUrl
+          
+          // Track redirect visit
+          const trackRedirect = async () => {
+            try {
+              await fetch('/api/analytics', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ type: 'redirect', url: targetUrl }),
+              })
+            } catch (error) {
+              console.error('Error tracking redirect:', error)
+            }
+          }
+          
+          trackRedirect().then(() => {
+            window.location.href = targetUrl
+          })
           return 0
         }
         return prev - 1000
@@ -62,9 +80,23 @@ export default function RedirectHandler() {
     return () => clearInterval(timer)
   }, [config])
 
-  const handleSkip = () => {
+  const handleSkip = async () => {
     setIsRedirecting(true)
     const targetUrl = config.targetUrl || localStorage.getItem('randomUrl') || 'https://example.com'
+    
+    // Track redirect visit
+    try {
+      await fetch('/api/analytics', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ type: 'redirect', url: targetUrl }),
+      })
+    } catch (error) {
+      console.error('Error tracking redirect:', error)
+    }
+    
     window.location.href = targetUrl
   }
 

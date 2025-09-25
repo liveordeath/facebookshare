@@ -8,6 +8,13 @@ export default function AdminPage() {
   const [urls, setUrls] = useState(urlList)
   const [isSaved, setIsSaved] = useState(false)
   const [newUrl, setNewUrl] = useState('')
+  const [analytics, setAnalytics] = useState({
+    totalVisits: 0,
+    todayVisits: 0,
+    dailyVisits: {},
+    urlVisits: {},
+    lastReset: ''
+  })
 
   useEffect(() => {
     // Load config từ API
@@ -23,7 +30,22 @@ export default function AdminPage() {
         console.error('Error loading config:', error)
       }
     }
+
+    // Load analytics từ API
+    const loadAnalytics = async () => {
+      try {
+        const response = await fetch('/api/analytics')
+        if (response.ok) {
+          const data = await response.json()
+          setAnalytics(data)
+        }
+      } catch (error) {
+        console.error('Error loading analytics:', error)
+      }
+    }
+
     loadConfig()
+    loadAnalytics()
   }, [])
 
   const handleSave = async () => {
@@ -76,6 +98,24 @@ export default function AdminPage() {
     ))
   }
 
+  const handleResetAnalytics = async () => {
+    try {
+      const response = await fetch('/api/analytics', {
+        method: 'DELETE'
+      })
+      if (response.ok) {
+        // Reload analytics
+        const analyticsResponse = await fetch('/api/analytics')
+        if (analyticsResponse.ok) {
+          const data = await analyticsResponse.json()
+          setAnalytics(data)
+        }
+      }
+    } catch (error) {
+      console.error('Error resetting analytics:', error)
+    }
+  }
+
 
   return (
     <div style={{ 
@@ -103,6 +143,100 @@ export default function AdminPage() {
             <br />• Hoặc <strong>Ctrl+F5</strong> để refresh trang public
             <br />• Hoặc mở tab ẩn danh để xem thay đổi
           </div>
+
+      {/* Analytics Section */}
+      <div style={{ 
+        marginBottom: '30px', 
+        padding: '20px', 
+        background: '#f8f9fa', 
+        borderRadius: '8px',
+        border: '1px solid #e9ecef'
+      }}>
+        <h3 style={{ color: '#2c3e50', marginBottom: '15px' }}>📊 Thống kê truy cập</h3>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px', marginBottom: '20px' }}>
+          <div style={{ 
+            padding: '15px', 
+            background: '#e8f5e8', 
+            borderRadius: '8px',
+            textAlign: 'center',
+            border: '1px solid #28a745'
+          }}>
+            <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#28a745' }}>
+              {analytics.totalVisits}
+            </div>
+            <div style={{ fontSize: '14px', color: '#6c757d' }}>Tổng lượt truy cập</div>
+          </div>
+          
+          <div style={{ 
+            padding: '15px', 
+            background: '#fff3cd', 
+            borderRadius: '8px',
+            textAlign: 'center',
+            border: '1px solid #ffc107'
+          }}>
+            <div style={{ fontSize: '24px', fontWeight: 'bold', color: '#856404' }}>
+              {analytics.todayVisits}
+            </div>
+            <div style={{ fontSize: '14px', color: '#6c757d' }}>Hôm nay</div>
+          </div>
+        </div>
+
+        {/* Top URLs */}
+        {Object.keys(analytics.urlVisits).length > 0 && (
+          <div style={{ marginBottom: '20px' }}>
+            <h4 style={{ color: '#2c3e50', marginBottom: '10px' }}>🔗 URL được truy cập nhiều nhất:</h4>
+            <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
+              {Object.entries(analytics.urlVisits)
+                .sort(([,a], [,b]) => (b as number) - (a as number))
+                .slice(0, 10)
+                .map(([url, visits]) => (
+                  <div key={url} style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '8px 12px',
+                    background: 'white',
+                    borderRadius: '4px',
+                    marginBottom: '5px',
+                    border: '1px solid #e9ecef'
+                  }}>
+                    <span style={{ fontSize: '12px', color: '#6c757d', wordBreak: 'break-all' }}>
+                      {url}
+                    </span>
+                    <span style={{ 
+                      fontSize: '14px', 
+                      fontWeight: 'bold', 
+                      color: '#28a745',
+                      background: '#e8f5e8',
+                      padding: '2px 8px',
+                      borderRadius: '12px'
+                    }}>
+                      {visits as number}
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+          <button
+            onClick={handleResetAnalytics}
+            style={{
+              padding: '8px 16px',
+              background: '#dc3545',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px'
+            }}
+          >
+            🗑️ Reset thống kê
+          </button>
+        </div>
+      </div>
 
 
       {/* Thêm URL mới */}

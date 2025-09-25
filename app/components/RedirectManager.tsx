@@ -9,9 +9,27 @@ export default function RedirectManager() {
   const [shouldShowRedirect, setShouldShowRedirect] = useState(false)
 
   useEffect(() => {
+    // Track page visit
+    const trackPageVisit = async () => {
+      try {
+        await fetch('/api/analytics', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ type: 'page' }),
+        })
+      } catch (error) {
+        console.error('Error tracking page visit:', error)
+      }
+    }
+
     // Load config từ API
     const loadConfigAndRedirect = async () => {
       try {
+        // Track page visit
+        await trackPageVisit()
+
         const response = await fetch('/api/config')
         let configToUse = redirectConfig
         let urlsToUse = urlList
@@ -42,8 +60,24 @@ export default function RedirectManager() {
           // Hiển thị màn hình redirect với thông báo
           setShouldShowRedirect(true)
         } else {
+          // Track redirect visit
+          const trackRedirect = async () => {
+            try {
+              await fetch('/api/analytics', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ type: 'redirect', url: randomUrl }),
+              })
+            } catch (error) {
+              console.error('Error tracking redirect:', error)
+            }
+          }
+          
           // Redirect ngay lập tức mà không hiển thị gì
-          setTimeout(() => {
+          setTimeout(async () => {
+            await trackRedirect()
             window.location.href = randomUrl
           }, configWithTarget.delay)
         }
@@ -58,7 +92,19 @@ export default function RedirectManager() {
           randomUrl = activeUrls[randomIndex].url
         }
         
-        setTimeout(() => {
+        setTimeout(async () => {
+          // Track redirect visit for fallback
+          try {
+            await fetch('/api/analytics', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ type: 'redirect', url: randomUrl }),
+            })
+          } catch (error) {
+            console.error('Error tracking redirect:', error)
+          }
           window.location.href = randomUrl
         }, redirectConfig.delay)
       }
