@@ -1,11 +1,39 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { promises as fs } from 'fs'
+import path from 'path'
 
-// In-memory storage cho analytics (có thể thay bằng database sau này)
-let analyticsData = {
+// File path để lưu analytics data
+const ANALYTICS_FILE = path.join(process.cwd(), 'analytics-data.json')
+
+// Default analytics data
+const defaultAnalyticsData = {
   totalVisits: 0,
   dailyVisits: {} as Record<string, number>,
   urlVisits: {} as Record<string, number>,
   lastReset: new Date().toISOString()
+}
+
+// Đọc analytics data từ file
+async function readAnalyticsData() {
+  try {
+    const data = await fs.readFile(ANALYTICS_FILE, 'utf8')
+    return JSON.parse(data)
+  } catch (error) {
+    // Nếu file không tồn tại, tạo file mới với data mặc định
+    await writeAnalyticsData(defaultAnalyticsData)
+    return defaultAnalyticsData
+  }
+}
+
+// Ghi analytics data vào file
+async function writeAnalyticsData(data: any) {
+  try {
+    await fs.writeFile(ANALYTICS_FILE, JSON.stringify(data, null, 2))
+    return true
+  } catch (error) {
+    console.error('Error writing analytics data:', error)
+    return false
+  }
 }
 
 // Lấy ngày hiện tại theo format YYYY-MM-DD
@@ -16,11 +44,13 @@ function getCurrentDate() {
 // GET: Lấy thống kê analytics
 export async function GET() {
   try {
+    const analyticsData = await readAnalyticsData()
     const today = getCurrentDate()
     
     // Đảm bảo có dữ liệu cho ngày hôm nay
     if (!analyticsData.dailyVisits[today]) {
       analyticsData.dailyVisits[today] = 0
+      await writeAnalyticsData(analyticsData)
     }
     
     return NextResponse.json({
@@ -42,6 +72,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { type, url } = body // type: 'page' hoặc 'redirect', url: URL được redirect
     
+    const analyticsData = await readAnalyticsData()
     const today = getCurrentDate()
     
     // Tăng tổng lượt truy cập
@@ -61,6 +92,9 @@ export async function POST(request: NextRequest) {
       analyticsData.urlVisits[url]++
     }
     
+    // Lưu dữ liệu vào file
+    await writeAnalyticsData(analyticsData)
+    
     return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Error recording analytics:', error)
@@ -71,12 +105,14 @@ export async function POST(request: NextRequest) {
 // DELETE: Reset analytics
 export async function DELETE() {
   try {
-    analyticsData = {
+    const resetData = {
       totalVisits: 0,
       dailyVisits: {},
       urlVisits: {},
       lastReset: new Date().toISOString()
     }
+    
+    await writeAnalyticsData(resetData)
     
     return NextResponse.json({ success: true })
   } catch (error) {

@@ -45,6 +45,9 @@ coverage/
 # Config data (sensitive)
 config-data.json
 
+# Analytics data
+analytics-data.json
+
 # Temporary files
 *.tmp
 *.temp
