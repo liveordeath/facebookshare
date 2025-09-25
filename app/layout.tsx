@@ -4,7 +4,7 @@ import './globals.css'
 // Dynamic metadata function
 export async function generateMetadata(): Promise<Metadata> {
       let pageSettings = {
-        title: '.',
+        title: 'Trong này ẩn một điều mà bạn chắc chắn muốn biết',
         image: 'https://raw.githubusercontent.com/liveordeath/facebookshare/refs/heads/main/public/images/IMG_7442.JPG' // ← Thay bằng URL Imgur của bạn
       }
 
