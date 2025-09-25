@@ -45,8 +45,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: pageSettings.image,
-          width: 900,
-          height: 1200,
+          width: 1200,
+          height: 628,
         },
       ],
       locale: 'vi_VN',
