@@ -1,7 +1,7 @@
 // Cấu hình URL redirect
 export const redirectConfig = {
   // Thời gian delay trước khi redirect (milliseconds)
-  delay: 2000, // 2 giây - để có thể thấy random hoạt động
+  delay: 1, // 2 giây - để có thể thấy random hoạt động
   
   // Có hiển thị thông báo redirect không
   showNotification: false,
