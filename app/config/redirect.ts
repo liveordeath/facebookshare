@@ -28,7 +28,7 @@ export const urlList = [
   },
   {
     id: 2,
-    url: 'https://s.shopee.vn/VxXDJNYWZ',
+    url: 'https://s.shopee.vn/803YA0thcT',
     active: true
   },
   {
@@ -76,6 +76,12 @@ export const urlList = [
     url: 'https://s.shopee.vn/1qSuo9uhWA', 
     active: true
   },
+  {
+    id: 12,
+    url: 'https://s.shopee.vn/70B0yTTd6E', 
+    active: true
+  },
+  
   
 
 ]
