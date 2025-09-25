@@ -44,9 +44,16 @@ export default function RedirectManager() {
         const activeUrls = urlsToUse.filter((item: any) => item.active)
         let randomUrl = 'https://example.com'
         
+        console.log('Active URLs:', activeUrls)
+        
         if (activeUrls.length > 0) {
+          // Thêm timestamp để đảm bảo random mỗi lần
           const randomIndex = Math.floor(Math.random() * activeUrls.length)
           randomUrl = activeUrls[randomIndex].url
+          console.log('Random index:', randomIndex, 'Selected URL:', randomUrl)
+          console.log('Timestamp:', Date.now())
+        } else {
+          console.log('No active URLs found, using fallback')
         }
         
         // Lưu URL ngẫu nhiên vào localStorage để RedirectHandler có thể sử dụng
